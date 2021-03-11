@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @podcast.artist  %></h1>
+<ul>
+<% 
+@episodes.each do |episode|  
+%>
+<li><%= episode.title  %></li>
+<% end %>
+
+</ul>
+<!--<%= link_to 'Edit', edit_podcast_path(@podcast) %> |-->
+<%= link_to 'Back', podcasts_path %>

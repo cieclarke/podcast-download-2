@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: 
+    podcast_id: 1
+    guid: '123'
+    title: 'One'
+    genre: 'Podcast'
+    publication_date: '12/2/21'
+    url: 'http://cieclarke.com'
+    artist: 'BBC'
+    album: 'BBC'
+
+two: 
+    podcast_id: 2
+    guid: '456'
+    title: 'Two'
+    genre: 'Podcast'
+    publication_date: '12/2/21'
+    url: 'http://cieclarke.com'
+    artist: 'CBBC'
+    album: 'CBBC'

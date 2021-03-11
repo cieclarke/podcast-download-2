@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<ul>
+<% 
+@episodes.each do |episode|  
+%>
+<li><%= episode.title  %></li>
+<% end %>
+
+</ul>
+
+
+<%= link_to 'Back', episodes_path %>
