@@ -1,0 +1,13 @@
+default: &default
+    
+
+development:
+  base_folder: '/Users/cieclarke/Downloads/podcast/'
+  <<: *default
+
+test:
+  base_folder: '/Users/cieclarke/Downloads/podcast/'
+  <<: *default
+
+production:
+  <<: *default

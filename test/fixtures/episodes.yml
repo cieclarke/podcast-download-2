@@ -10,7 +10,8 @@ one:
     title: 'One'
     genre: 'Podcast'
     publication_date: '12/2/21'
-    url: 'http://cieclarke.com'
+    url: 'http://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/http/vpid/p08tt9wy.mp3'
+    #url: "http://cieclarke.com/notes"
     artist: 'BBC'
     album: 'BBC'
 
@@ -20,6 +21,8 @@ two:
     title: 'Two'
     genre: 'Podcast'
     publication_date: '12/2/21'
-    url: 'http://cieclarke.com'
+    url: 'http://open.live.bbc.co.uk/mediaselector/6/redir/version/2.0/mediaset/audio-nondrm-download-low/proto/http/vpid/p08tt9wy.mp3'
+    #url: 'http://aod-pod-uk-live.akamaized.net/mpg_mp3_vlow/modav/bUnknown-02657f28-866e-4b41-b4d6-88782a66c79c_p08tt9wy_cUnknown_1602234310463.mp3?__gda__=1615775065_d6459a45531cfb2acc50ecf9fdecd90f'
+    #url: "http://cieclarke.com/notes"
     artist: 'CBBC'
     album: 'CBBC'

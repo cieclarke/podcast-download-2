@@ -1,4 +1,5 @@
 <%= form_with(model: podcast, local: true) do |form| %>
+  <% if podcast %>
   <% if podcast.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(podcast.errors.count, "error") %> prohibited this podcast from being saved:</h2>
@@ -10,7 +11,15 @@
       </ul>
     </div>
   <% end %>
-
+  <% end %>
+  <%= form.label :artist %>
+  <%= form.text_field :artist, required: true %>
+  <%= form.label :album %>
+  <%= form.text_field :album, required: true %>
+  <%= form.label :url %>
+  <%= form.text_field :url, required: true %>
+  <%= form.label :recent %>
+  <%= form.text_field :recent, required: true %>
   <div class="actions">
     <%= form.submit %>
   </div>

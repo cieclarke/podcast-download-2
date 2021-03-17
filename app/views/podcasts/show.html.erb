@@ -1,10 +1,15 @@
 <p id="notice"><%= notice %></p>
-<h1><%= @podcast.artist  %></h1>
+<h1><%= @podcast.artist  %> - <%= @podcast.album  %></h1>
 <ul>
-<% 
-@episodes.each do |episode|  
-%>
-<li><%= episode.title  %></li>
+<% @podcast.recent_episodes.each do |episode|  %>
+<li>
+<%= episode.title  %>
+<% if episode.audio then %>
+tick
+<% else %>
+cross
+<% end %>
+</li>
 <% end %>
 
 </ul>

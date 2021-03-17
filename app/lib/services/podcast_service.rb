@@ -7,31 +7,44 @@ module Services
 
         def initialize()
            
-        end        
+        end     
+        
+        def new
+            Podcast.new
+        end
         
         def all
             Podcast.all
         end
 
-        def by_id(id)
-            res = self.all.where ( {id: id}  )
-            if res.count > 0
-                res[0]
-            else
-                nil
+        def where(params)
+            self.all.where params
+        end
+
+        def podcast(id)
+            Podcast.find id 
+        end
+
+        def save_podcast(p)
+            v = Hash.new
+            podcast = Podcast.create(p)
+            v[:podcast] = podcast
+            v[:saved] = podcast.save
+            if !v[:saved]
+                v[:errors] = podcast.errors
             end
+            v
         end
 
-        def by_artist(artist)
-            self.all.where ( {artist: artist}  )
-        end
-
-        def by_album(album)
-            self.all.where ( {album: album}  )
-        end
-
-        def recent_episodes(podcast)
-            podcast.episodes.sort_by{|episode| episode.publication_date}.reverse.first(podcast.recent)
+        def save_episode(e)
+            v = Hash.new
+            episode = Episode.create(e)
+            v[:podcast] = episode
+            v[:saved] = episode.save
+            if !v[:saved]
+                v[:errors] = podcast.errors
+            end
+            v
         end
 
     end

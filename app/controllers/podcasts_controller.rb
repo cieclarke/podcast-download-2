@@ -1,5 +1,5 @@
 class PodcastsController < ApplicationController
-  before_action :set_podcast, only: %i[ index show edit update destroy ]
+  before_action :set_podcast, only: %i[ index show new create edit update destroy ]
 
   # GET /podcasts or /podcasts.json
   def index
@@ -8,13 +8,12 @@ class PodcastsController < ApplicationController
 
   # GET /podcasts/1 or /podcasts/1.json
   def show
-    @podcast = @service.by_id(params[:id])
-    @episodes = @service.recent_episodes(@podcast)
+    @podcast = @service.podcast(params[:id])
   end
 
   # GET /podcasts/new
   def new
-    @podcast = Podcast.new
+    @podcast = @service.new
   end
 
   # GET /podcasts/1/edit
@@ -23,15 +22,17 @@ class PodcastsController < ApplicationController
 
   # POST /podcasts or /podcasts.json
   def create
-    @podcast = Podcast.new(podcast_params)
+
+    p = @service.save_podcast(podcast_params)
 
     respond_to do |format|
-      if @podcast.save
-        format.html { redirect_to @podcast, notice: "Podcast was successfully created." }
+      if p[:saved]
+        format.html { redirect_to action: "index", notice: "Podcast was successfully created." }
         format.json { render :show, status: :created, location: @podcast }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @podcast.errors, status: :unprocessable_entity }
+        @podcast = p[:podcast]
+        format.html { render :action => :new, :locals => {:podcast => p[:podcast]}  }
+        format.json { render json: p[:errors], status: :unprocessable_entity }
       end
     end
   end
@@ -40,7 +41,7 @@ class PodcastsController < ApplicationController
   def update
     respond_to do |format|
       if @podcast.update(podcast_params)
-        format.html { redirect_to @podcast, notice: "Podcast was successfully updated." }
+        format.html { redirect_to :index, notice: "Podcast was successfully updated." }
         format.json { render :show, status: :ok, location: @podcast }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,6 +59,10 @@ class PodcastsController < ApplicationController
     end
   end
 
+  def permitted_params
+    params.permit(:artist, :album, :recent, :url)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_podcast
@@ -66,6 +71,6 @@ class PodcastsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def podcast_params
-      params.fetch(:podcast, {})
+      params.require(:podcast).permit(:artist, :album, :url, :recent)
     end
 end
