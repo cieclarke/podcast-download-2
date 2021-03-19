@@ -18,33 +18,47 @@ module Services
         end
 
         def where(params)
-            self.all.where params
+            Podcast.where params
         end
 
         def podcast(id)
             Podcast.find id 
         end
 
-        def save_podcast(p)
-            v = Hash.new
-            podcast = Podcast.create(p)
-            v[:podcast] = podcast
-            v[:saved] = podcast.save
-            if !v[:saved]
-                v[:errors] = podcast.errors
+        def create(p)
+            podcast = Podcast.new(p)
+            if podcast.save then
+                { :podcast => podcast, :valid => true, :errors => [] }
+            else
+                { :podcast => podcast, :valid => false, :errors => podcast.errors }
             end
-            v
+            
         end
 
-        def save_episode(e)
-            v = Hash.new
-            episode = Episode.create(e)
-            v[:podcast] = episode
-            v[:saved] = episode.save
-            if !v[:saved]
-                v[:errors] = podcast.errors
+        def delete(p)
+            p.destroy
+        end
+
+        def update(id, p)
+            podcast = self.podcast(id)
+            if podcast.update(p) then
+                { :podcast => podcast, :valid => true, :errors => [] }
+            else
+                { :podcast => podcast, :valid => false, :errors => podcast.errors }
             end
-            v
+        end
+
+        def save(p)
+            Podcast.save(p)
+        end
+
+        def folder_path(p)
+            base_folder = Rails.configuration.audio['base_folder'].nil? ? '/' : Rails.configuration.audio['base_folder']
+            File.join(base_folder, p.artist, p.album)
+        end
+
+        def recent_episodes(p)
+            p.episodes.sort_by{|episode| episode.publication_date}.reverse.first(p.recent)
         end
 
     end

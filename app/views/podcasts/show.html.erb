@@ -1,17 +1,14 @@
 <p id="notice"><%= notice %></p>
 <h1><%= @podcast.artist  %> - <%= @podcast.album  %></h1>
 <ul>
-<% @podcast.recent_episodes.each do |episode|  %>
+<% @episodes.each do |episode|  %>
 <li>
 <%= episode.title  %>
-<% if episode.audio then %>
-tick
-<% else %>
-cross
-<% end %>
+
 </li>
 <% end %>
 
 </ul>
-<!--<%= link_to 'Edit', edit_podcast_path(@podcast) %> |-->
-<%= link_to 'Back', podcasts_path %>
+<%= link_to 'Edit', edit_podcast_path(@podcast) %> |
+<%= link_to 'Back', podcasts_path %> |
+<%= link_to 'Delete', @podcast, method: :delete, data: { confirm: 'Are you sure?' } %>

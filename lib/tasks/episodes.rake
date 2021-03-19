@@ -63,10 +63,10 @@ namespace :episodes do
   desc 'Download (& maintain) the podcast episodes'
   task :files do
     podcast_service = Services::PodcastService.new
+    podcasts = podcast_service.all
+    progressbar = ProgressBar.create(total: podcasts.size, format: ' %c/%C %P%%|%B|%e')
 
-    progressbar = ProgressBar.create
-
-    podcast_service.all.each do |podcast|
+    podcasts.each do |podcast|
 
       current_files = Set.new
 
@@ -83,16 +83,16 @@ namespace :episodes do
 
       delete_files.to_a.each do |file| File.delete(file) end
 
-      podcast.recent_episodes.delete_if { |episode| !add_files.to_a.include?(File.join(podcast.folder_path, episode.file_name)) } .each do |episode|
-        
-        episode_filepath = File.join(podcast.folder_path, episode.file_name)
-        mp3 = Down.download(episode.url, max_redirects: 3)
-        FileUtils.mv(mp3.path, episode_filepath)
+        podcast.recent_episodes.delete_if { |episode| !add_files.to_a.include?(File.join(podcast.folder_path, episode.file_name)) } .each do |episode|
+          
+          episode_filepath = File.join(podcast.folder_path, episode.file_name)
+          mp3 = Down.download(episode.url, max_redirects: 3)
+          FileUtils.mv(mp3.path, episode_filepath)
 
+        end
+        progressbar.increment
       end
-
-    end
-
+      progressbar.finish
   end
-
+  
 end

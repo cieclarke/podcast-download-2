@@ -12,15 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2021_03_13_120336) do
 
-  create_table "audios", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "filename"
-    t.date "downloaded"
-    t.bigint "episode_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["episode_id"], name: "index_audios_on_episode_id"
-  end
-
   create_table "episodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "guid"
     t.string "title"
@@ -46,5 +37,4 @@ ActiveRecord::Schema.define(version: 2021_03_13_120336) do
     t.index ["episode_id"], name: "index_podcasts_on_episode_id"
   end
 
-  add_foreign_key "audios", "episodes"
 end
